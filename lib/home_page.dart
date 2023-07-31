@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             return Padding(
                               padding: const EdgeInsets.all(0),
                               child: Container(
-                                padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+                                padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
                                 height:
                                     MediaQuery.of(context).size.height * 0.85,
                                 decoration: const BoxDecoration(
@@ -142,6 +142,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ),
                                               TextField(
                                                 autofocus: false,
+                                                style: TextStyle(color: Theme.of(context)
+                                                            .primaryColor), 
                                                 decoration: InputDecoration(
                                                   enabledBorder:
                                                       OutlineInputBorder(
@@ -163,7 +165,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         BorderRadius.circular(
                                                             12.0),
                                                   ),
-                                                  // focusColor: Color.fromARGB(255, 147,183, 190),
                                                   hintText: 'Number',
                                                 ),
                                                 keyboardType:
