@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
           
           titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 27, 41, 75)),
           bodyMedium: TextStyle(fontSize: 18, fontFamily: 'montserrat', color: Color.fromARGB(255, 27, 41, 75)),
+          bodyLarge: TextStyle(fontSize: 18, fontFamily: 'montserrat', fontWeight: FontWeight.bold, color: Color.fromARGB(255, 147,183, 190)),
         ),
       ),
       debugShowCheckedModeBanner: false,
