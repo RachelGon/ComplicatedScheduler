@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Color.fromARGB(255, 46, 134, 171),
+        primaryColor: Color.fromARGB(255, 27, 41, 75),
+        secondaryHeaderColor: const Color.fromARGB(255, 147,183, 190),
         useMaterial3: true,
         scaffoldBackgroundColor: const Color.fromARGB(255, 147,183, 190),
         
@@ -25,7 +26,10 @@ class MyApp extends StatelessWidget {
           bodyMedium: TextStyle(fontSize: 18, fontFamily: 'montserrat', color: Color.fromARGB(255, 27, 41, 75)),
         ),
       ),
+      debugShowCheckedModeBanner: false,
+
       home: const MyHomePage(title: 'Alarms'),
+
     );
   }
 }
