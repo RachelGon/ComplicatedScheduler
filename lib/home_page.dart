@@ -42,17 +42,27 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onPressed: () {
                       //*********************************** BOTTOM SHEET START *******************************************************
-                      showModalBottomSheet<dynamic>(
+                      showModalBottomSheet(
                         isScrollControlled: true,
                         context: context,
+                        backgroundColor: Colors.transparent,
                         builder: (BuildContext context) {
                           return StatefulBuilder(builder: (BuildContext context,
                               StateSetter
                                   modalSetState /*You can rename this!*/) {
                             return Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: SizedBox(
-                                height: MediaQuery.of(context).size.height * 2,
+                              padding: const EdgeInsets.all(0),
+                              child: Container(
+                                padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.85,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(25.0),
+                                    topRight: Radius.circular(25.0),
+                                  ),
+                                ),
                                 child: Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
