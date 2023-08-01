@@ -1,8 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:complicated_scheduler/alarm_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+
+int id = 0;
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 class MyHomePage extends StatefulWidget {
 
@@ -24,6 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    LocalNotificationService.initialize();
   }
 
 
@@ -243,17 +249,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           12), // <-- Radius
+                                                  ),
                                                 ),
-                                              ),
-                                              child: Text(
-                                                'Create',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge,
-                                              ),
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                            ),
+                                                child: Text(
+                                                  'Create',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge,
+                                                ),
+                                                onPressed: () async {
+                                                  Navigator.pop(context);
+                                                  await _showInsistentNotification();
+
+
+                                                }),
                                           ),
                                         ],
                                       )
@@ -362,5 +371,22 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+  Future<void> _showInsistentNotification() async {
+    // This value is from: https://developer.android.com/reference/android/app/Notification.html#FLAG_INSISTENT
+    const int insistentFlag = 4;
+    final AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+            'your channel id', 'your channel name',
+            channelDescription: 'your channel description',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker',
+            additionalFlags: Int32List.fromList(<int>[insistentFlag]));
+            
+    final NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    await flutterLocalNotificationsPlugin.show(
+        id++, 'insistent title', 'insistent body', notificationDetails,
+        payload: 'item x');
   }
 }
