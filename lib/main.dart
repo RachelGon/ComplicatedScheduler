@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:complicated_scheduler/home_page.dart';
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'dart:isolate';
 
-void main() {
+import 'package:complicated_scheduler/alarm_service.dart';
+
+
+void main() async  {
+
   runApp(const MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {

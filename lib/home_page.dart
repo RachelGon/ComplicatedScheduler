@@ -1,10 +1,16 @@
+import 'package:complicated_scheduler/alarm_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
+  const MyHomePage({
+    super.key, 
+    required this.title
+  });
+  
   final String title;
 
   @override
@@ -15,11 +21,13 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<String> entries = <String>['A', 'B', 'C'];
   final List<int> colorCodes = <int>[600, 500, 100];
 
-  // @override
-  // void initState() {
-  //   alarmTime = '${DateFormat('hh:mm a').format(DateTime.now())}';
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    super.initState();
+  }
+
+
+
 
   String alarmTime = '${DateFormat('hh:mm a').format(DateTime.now())}';
 
@@ -68,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
+                                      
                                       // ************************************* TIME PICKER START *****************************************************
                                       Builder(
                                         builder: (context) => Expanded(
@@ -241,7 +250,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyLarge,
-                                                    
                                               ),
                                               onPressed: () =>
                                                   Navigator.pop(context),
