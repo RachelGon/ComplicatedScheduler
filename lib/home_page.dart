@@ -6,6 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
 int id = 0;
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -31,9 +34,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     LocalNotificationService.initialize();
   }
-
-
-
 
   String alarmTime = '${DateFormat('hh:mm a').format(DateTime.now())}';
 
@@ -258,7 +258,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       .bodyLarge,
                                                 ),
                                                 onPressed: () async {
-                                                  Navigator.pop(context);
+                                                  // Navigator.pop(context);
                                                   await _showInsistentNotification();
 
 
@@ -373,20 +373,57 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   Future<void> _showInsistentNotification() async {
-    // This value is from: https://developer.android.com/reference/android/app/Notification.html#FLAG_INSISTENT
-    const int insistentFlag = 4;
-    final AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-            'your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker',
-            additionalFlags: Int32List.fromList(<int>[insistentFlag]));
-            
-    final NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+    // // This value is from: https://developer.android.com/reference/android/app/Notification.html#FLAG_INSISTENT
+    // const int insistentFlag = 4;
+
+    // final AndroidNotificationDetails androidNotificationDetails =
+    //     AndroidNotificationDetails('your channel id', 'your channel name',
+    //         channelDescription: 'your channel description',
+    //         importance: Importance.max,
+    //         priority: Priority.high,
+    //         ticker: 'ticker',
+    //         additionalFlags: Int32List.fromList(<int>[insistentFlag]));
+    
+    // final NotificationDetails notificationDetails =
+    //     NotificationDetails(android: androidNotificationDetails);
+    //     print(id);
+    //     print("HERE");
+
+    // await flutterLocalNotificationsPlugin.zonedSchedule(
+    //   id++,
+    //   'insistent title',
+    //   'insistent body',
+    //   tz.TZDateTime.now(tz.local).add(Duration(seconds: 5)),
+      
+    //   notificationDetails,
+    //   androidScheduleMode: AndroidScheduleMode.alarmClock,
+    //     uiLocalNotificationDateInterpretation:
+    //         UILocalNotificationDateInterpretation.absoluteTime);
+    const DarwinNotificationDetails darwinNotificationDetails =
+        DarwinNotificationDetails(
+      interruptionLevel: InterruptionLevel.timeSensitive,
+    );
+
+    const NotificationDetails notificationDetails = NotificationDetails(
+        iOS: darwinNotificationDetails, macOS: darwinNotificationDetails);
     await flutterLocalNotificationsPlugin.show(
-        id++, 'insistent title', 'insistent body', notificationDetails,
+        id++,
+        'title of time sensitive notification',
+        'body of time sensitive notification',
+        notificationDetails,
         payload: 'item x');
   }
+
+
+
+  tz.TZDateTime _nextInstanceOfTenAM() {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 10);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
+  }
+
 }
